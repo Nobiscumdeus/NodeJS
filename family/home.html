@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chasfat Project$</title>
+    <style type="text/css">
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            text-decoration:none;
+            font-family:Georgia, 'Times New Roman', Times, serif;
+            list-style:none;
+        }
+        body{
+            min-height:100vh;
+            background:#666;
+            color:#fff;
+            display:flex;
+            flex-direction: column;
+            flex-wrap:wrap;
+
+        }
+        #head,#main,#foot{
+            width:100%;
+            flex-basis:100%;
+            display:flex;
+
+        }
+        #head{
+            background: #222;
+            min-height:fit-content;
+            align-items: center;
+            justify-content: space-between;
+            padding:0px 100px;
+        }
+        .logo{
+            font-size:28px;
+            font-weight:bold;
+            color:#fefefe;
+        }
+        .hamburger{
+            display:none;
+
+        }
+        .nav-bar ul{
+            display:flex;
+        }
+        .nav-bar ul li a{
+            display:block;
+            color:#fefefe;
+            font-size:20px;
+            border-radius: 50px;
+            padding:10px 25px;
+            transition:0.2s;
+            margin:0px 5px;
+            
+        }
+        .nav-bar ul li a:hover{
+            color:#11101b;
+            background:#fefefe;
+        }
+        .nav-bar ul li a.active{
+            color:#11101b;
+            background:#fefefe;
+
+
+        }
+        @media only screen and (max-width:1120px){
+            #head{
+                padding:0 30px;
+            }
+        }
+        @media only screen and (max-width:900px){
+            .hamburger{
+                display:block;
+                cursor:pointer;
+            }
+            .hamburger .line{
+                width:30px;
+                height:3px;
+                background: #fefefe;
+                margin:6px 0;
+            }
+            .nav-bar.active{
+                height:400px;
+            }
+            .nav-bar.active ul{
+                opacity:1;
+            }
+            .nav-bar{
+                height:0px;
+                position:absolute;
+                top:80px;
+                left:0;
+                right:0;
+                width:100vw;
+                background:#11101b;
+                transition:0.2s;
+                overflow:hidden;
+            }
+            .nav-bar ul{
+                display:block;
+                width:fit-content;
+                margin:80px auto 0 auto;
+                text-align:center;
+                transition:0.5s;
+                opacity:0;
+            }
+            .nav-bar ul li a{
+                margin-bottom:12px;
+                color:red;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="head">
+        <div class="logo">Chasfat Project$</div>
+        <div class="hamburger">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <nav class="nav-bar">
+            <ul>
+                <li><a href="" class="active">Home</a></li>
+                <li><a href="">Features</a></li>
+                <li><a href="">Opportunities</a></li>
+                <li> </li>
+
+            </ul>
+
+        </nav>
+
+    </div>
+    <div id="main">
+
+    </div>
+    <div id="foot">
+
+    </div>
+    <script> 
+        hamburger=document.querySelector(".hamburger");
+        hamburger.onclick=function(){
+            navBar=document.querySelector(".nav-bar");
+            navBar.classList.toggle("active");
+        }
+    </script>
+</body>
+</html>

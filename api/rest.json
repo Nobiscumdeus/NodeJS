@@ -1,0 +1,32 @@
+{
+    "user1":{
+        "id":1,
+        "firstname":"Ifeoluwa",
+        "lastname":"Falade",
+        "email":"Falade@gmail.com"
+    },
+    "user2":{
+        "id":2,
+        "firstname":"Victoria",
+        "lastname":"Owoeye",
+        "email":"Owoeye@gmail.com"
+    },
+    "user3":{
+        "id":3,
+        "firstname":"John",
+        "lastname":"Akinkunmi",
+        "email":"Akinkunmi@gmail.com"
+    },
+    "user4":{
+        "id":4,
+        "firstname":"Ayandoyin",
+        "lastname":"Ayantoyinbo",
+        "email":"Ayantoyinbo@gmail.com"
+    },
+    "user5":{
+        "id":5,
+        "firstname":"Kolade",
+        "lastname":"Inioluwa",
+        "email":"Inioluwa@gmail.com"
+    }
+}

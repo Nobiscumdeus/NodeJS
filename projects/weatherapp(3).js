@@ -1,3 +1,10 @@
+//const require('dotenv').config(); //Load environment variables from the .env file 
+const dotenv=require('dotenv')
+const path=require('path')
+
+//Load the environment variables 
+dotenv.config({path:path.resolve(__dirname,'../.env')})
+
 const express=require('express')
 const ejs=require('ejs')
 //const fetch=require('node-fetch')
@@ -14,7 +21,7 @@ app.use(express.urlencoded({extended:true}))
 
 import('node-fetch').then(async(nodeFetch)=>{
     const fetch=nodeFetch.default; 
-    const apiKey='9cda9b2680fd602782c9b4417a2caed2'
+    const apiKey=process.env.OPENWEATHERMAP_API_KEY;
 
 
 
@@ -28,13 +35,14 @@ app.post('/weatherapp',async(req,res)=>{
     const weatherUrl=`https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${apiKey}`;
 
     try{
+        let mess=""
         const response=await fetch(weatherUrl);
         if(response.ok){
             const weatherData=await response.json();
             res.render('weatherapp',{weatherData,location})
             console.log('connected wella')
         }else{
-            res.render('weatherapp',{weatherData:null,location})
+            res.render('weatherapp',{weatherData:null,location,mess:"Ooops!!! This location details were not found "})
             console.log('Not connected well ooo')
         }
     }catch(error){

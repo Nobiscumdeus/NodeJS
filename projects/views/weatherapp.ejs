@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Node JS : Weather app</title>
-    <link rel="stylesheet"  href="projects.css" type="text/css">
+    <link rel="stylesheet"  href="/projects.css" type="text/css">
   </head>
   <body>
     <h1>Weather Application : Project 3</h1>
@@ -31,6 +31,10 @@
             Humidity: <%= weatherData.main.humidity %> %
         </p>
 
-    <%} %>
+    <%} 
+    else{ %>
+      <strong class="error"><%= mess %></strong>
+
+   <% }%>
   </body>
 </html>

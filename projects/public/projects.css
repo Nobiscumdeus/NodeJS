@@ -5,8 +5,8 @@
 }
 body{
     min-height:100vh;
-    background:#ff3;
-    color:#000;
+    background:#333;
+    color:#fff;
     display:flex;
     flex-direction:column;
     justify-content:center;
@@ -28,6 +28,7 @@ form
 }
 form input
 {
+    margin:10px;
     width:60%;
     outline:none;
     border:none;
@@ -37,13 +38,15 @@ form input
 
 }
 form button{
+    margin:10px;
     width:100px;
     height:40px;
     color:#000;
+    font-weight:600;
 }
 form button:hover{
     cursor:pointer;
-    background:#333;
+    background:green;
     border-radius:5px;
     color:#fff;
     outline:none;
@@ -51,4 +54,7 @@ form button:hover{
 }
 a{
     text-decoration:none;
+}
+.error{
+    color:#ff004f;
 }

@@ -13,22 +13,22 @@ app.get('/todolist',(req,res)=>{
     res.render('todolist',{tasks });
 })
 
-app.post('/add',(req,res)=>{
-    const newTask=req.body.task //This collects the request from the input field 
+app.post('/todolist/add',(req,res)=>{
+    const newTask=req.body.task  //This collects the request from the input field 
     tasks.push(newTask);
     res.redirect('/todolist')
 })
 
 //Update a task (GET request to show the edit form )
 
-app.get('/edit/:id',(req,res)=>{
-    const taskId=pareseInt(req.params.id);
+app.get('/todolist/edit/:id',(req,res)=>{
+    const taskId=parseInt(req.params.id);
     const taskToEdit=tasks[taskId];
     res.render('edit',{taskId,taskToEdit})
 });
 
 //Update a task (POST request to save the edited task )
-app.post('/edit/:id',(req,res)=>{
+app.post('/todolist/edit/:id',(req,res)=>{
     const taskId=parseInt(req.params.id)
     const editedTask=req.body.editedTask
     tasks[taskId]=editedTask;
@@ -36,7 +36,7 @@ app.post('/edit/:id',(req,res)=>{
 })
 
 //Delete a task 
-app.get('/delete/:id',(req,res)=>{
+app.get('/todolist/delete/:id',(req,res)=>{
     const taskId=parseInt(req.params.id);
     tasks.splice(taskId,1)
     res.redirect('/todolist')

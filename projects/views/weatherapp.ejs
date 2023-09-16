@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Node JS : Weather app</title>
+    <link rel="stylesheet"  href="projects.css" type="text/css">
+  </head>
+  <body>
+    <h1>Weather Application : Project 3</h1>
+    <form action="/weatherapp/" method="POST">
+      <input
+        type="text"
+        name="location"
+        placeholder="Enter a Location"
+        required
+      />
+      <button type="submit">Get Weather</button>
+    </form>
+    <br/>
+    <% if (weatherData) { %>
+        <h2> Weather in <%= location %>: </h2>
+        <p>
+            <%= weatherData.weather[0].description %>
+        </p>
+        <p>
+            Temperature : <%= weatherData.main.temp %> celsius </p>
+        </p>
+        <p>
+            Humidity: <%= weatherData.main.humidity %> %
+        </p>
+
+    <%} %>
+  </body>
+</html>

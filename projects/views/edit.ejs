@@ -7,8 +7,15 @@
     <title>Document</title>
 </head>
 <body>
-    <h1> Edit Taks </h1>
-    <form action="">....Continue from here later </form>
+    <h1> Edit Tasks </h1>
+    <form action="/todolist/edit/<%= taskId %>" method="POST">
+        <!-- taskToEdit variable is obtained from the todolist(2).js controller -->
+        <input type="text" name="editedTask" value="<%= taskToEdit %>" required /> 
+        <button type="submit"> Save Changes </button>
+
+     
+
+    </form>
 
 </body>
 </html>

@@ -26,14 +26,14 @@ form
     flex-wrap:wrap;
     background:transparent;
 }
-form input
+form input,input
 {
     margin:10px;
-    width:60%;
+    width:90%;
     outline:none;
     border:none;
     border-bottom:3px solid blue;
-    color:#000;
+    color:#fff;
     background:transparent;
 
 }
@@ -43,6 +43,15 @@ form button{
     height:40px;
     color:#000;
     font-weight:600;
+}
+#send{
+    padding:10px;
+    border-radius:5px;
+
+}
+#send:hover{
+    background-color:green;
+    cursor:pointer;
 }
 form button:hover{
     cursor:pointer;

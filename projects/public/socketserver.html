@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/projects.css" />
+    <title>Chasfat on WebSocket</title>
+  </head>
+  <body>
+    <div id="chat">
+        <h1>Project 4 : Simple Chat App with Web Sockets </h1> 
+      <ul id="messages"></ul>
+      <input id="input" autocomplete="off" />
+      <button id="send">Send Message</button>
+    </div>
+    <script>
+      const socket = new WebSocket("ws://localhost:3000");
+
+      const messages = document.getElementById("messages");
+      const input = document.getElementById("input");
+      const sendButton = document.getElementById("send");
+
+
+      socket.onmessage=(event)=>{
+        const messageReceived=event.data;
+
+        if(messageReceived instanceof Blob){
+            //convert the Blob to text
+            const reader=new FileReader();
+            reader.onload=(e)=>{
+                const textMessage=e.target.result;
+                displayMessage(textMessage);
+            };
+            reader.readAsText(messageReceived);
+        }else{
+            //Handle as text (no conversion )
+            displayMessage(messageReceived)
+        }
+      }
+      function displayMessage(message){
+        const li=document.createElement('li')
+        li.textContent=message;
+        messages.appendChild(li)
+      }
+
+      sendButton.addEventListener("click", () => {
+        if (input.value) {
+          socket.send(input.value);
+          input.value = "";
+        }
+      });
+
+      /**
+      socket.onmessage = (event) => {
+        const li = document.createElement("li");
+        li.textContent = event.data;
+        messages.appendChild(li);
+      };
+
+      
+
+      **/
+    </script>
+  </body>
+</html>

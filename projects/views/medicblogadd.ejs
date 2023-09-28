@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medic Blog Add Post </title>
+    <link rel="stylesheet" type="text/css" href="/medicblog.css">
+</head>
+<body>
+    <h1>Add Tasks </h1> 
+    <br/>
+    <a href="/tasks">Home ?</a>
+    <hr>
+    <form action="/tasks/add" method="POST">
+        <input type="text" name="title" placeholder="Task Title" required />
+        <!--<input type="text" name="description" placeholder="Task description" />-->
+        <textarea cols="10" rows="10" name="description" placeholder="Enter content here..."></textarea>
+        <button type="submit"> Add Task </button>
+    </form>
+    
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!-- Views/tasks.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medic Blog List </title>
+    <link rel="stylesheet" type="text/css" href="/medicblog.css">
+    
+</head>
+<body>
+   <h1> Medic Blog Lists </h1> <br/>
+   <a href="/tasks/add/">Add New Post </a><hr/>
+   
+ <%
+ if(tasks.length===0){
+    %>
+    <p> Ooops!!! No tasks available </p>
+
+ <% }else
+ {
+    %>
+
+    <ul>
+        <% tasks.forEach(function(task){  %>
+            <li>
+              
+                <h3> <%= task.title %></h3> 
+                <a href="/tasks/<%= task._id %>/edit">Edit Post ?</a>
+                <a href="/tasks/<%= task._id %>/delete"> Delete Post ?</a>
+               
+                <p> Description : <%= task.description %> </p>
+                <p> Status: <%= task.done ? 'Done' : 'Not Done' %></p>
+            </li>
+
+       <% }); %>
+    </ul>
+
+<%
+ }
+ %>
+  
+</body>
+</html>

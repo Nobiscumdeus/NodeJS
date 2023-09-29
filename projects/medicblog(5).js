@@ -11,13 +11,14 @@ const path=require('path')
 dotenv.config({path:path.resolve(__dirname,'../.env')})
 const username=process.env.MONGO_USER
 const password=process.env.MONGO_PASSWORD
+const database=process.env.MONGO_DATABASE
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended:true}))
 app.set('view engine','ejs')
 app.set('views',path.join(__dirname,'views'));
 
 
-mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.i9zwcqc.mongodb.net/medicblog`,{
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.i9zwcqc.mongodb.net/${database}`,{
     //medicblog here is our database 
     useNewUrlParser:true,
     useUnifiedTopology:true,

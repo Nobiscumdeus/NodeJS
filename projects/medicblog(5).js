@@ -3,15 +3,21 @@ const mongoose=require('mongoose')
 const bodyParser=require('body-parser')
 const app=express()
 const port =process.env.PORT || 3000
+const dotenv=require('dotenv')
 const path=require('path')
 
+
+//Load the environment variables 
+dotenv.config({path:path.resolve(__dirname,'../.env')})
+const username=process.env.MONGO_USER
+const password=process.env.MONGO_PASSWORD
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended:true}))
 app.set('view engine','ejs')
 app.set('views',path.join(__dirname,'views'));
 
 
-mongoose.connect('mongodb+srv://Mongodb:Mongodb@cluster0.i9zwcqc.mongodb.net/medicblog',{
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.i9zwcqc.mongodb.net/medicblog`,{
     //medicblog here is our database 
     useNewUrlParser:true,
     useUnifiedTopology:true,

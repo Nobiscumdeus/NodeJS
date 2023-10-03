@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bethel Tabernacle </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/bethel.css">
+</head>
+<body>
+    <div class="all">
+    <div class="header">
+        <h1>Raphael Intl Ministries,Bethel Tabernacle</h1>
+        <h3>Attendance & Assessment for Church Growth </h3> <hr/>
+        <p> 
+            Developed to make it easy for ministers to follow the growth of the Church<br/>
+         Would be of best use through synergy between the ushering department and ministers 
+    </p>
+      
+    </div>
+    <div class="main">
+        <form action="/attendance-submission" method="POST">
+        <table>
+            <tr>
+                <th></th>
+                <th colspan="2"> Meeting Days </th>
+
+            </tr>
+           
+                <tr>
+                    <th>Categories</th>
+                    <th>Sunday Worship Service</th>
+                    <th> Wednesday mid-week Service</th>
+                </tr>
+
+          
+            
+                <tr>
+                    <td> Adult Males</td>
+                    <td><input class="sunday" type="number" name="sunday_males" placeholder="No. of adult males" min="0" max="500"  required /></td>
+                    <td><input class="wednesday" type="number" name="wednesday_males" placeholder="No. of adult males" min="0" max="500"  required /></td>
+                
+                
+                   
+                </tr>
+                <tr>
+                    <td> Adult Females </td>
+                    <td><input class="sunday" type="number" name="sunday_females" placeholder="No. of adult females" min="0" max="500"  required /></td>
+                    <td><input class="wednesday" type="number" name="wednesday_females" placeholder="No. of adult females" min="0" max="500"  required /></td>
+                </tr>
+                <tr>
+                    
+                    <td> Children </td>
+                    <td><input class="sunday" type="number" name="sunday_children" placeholder="No. of children" min="0" max="500"  required /></td>
+                    <td><input class="wednesday" type="number" name="wednesday_children" placeholder="No. of children" min="0" max="500"  required /></td>
+                </tr>
+                <tr>
+                    <td>Converts</td>
+                    <td><input class="sunday" type="number" name="sunday_converts" placeholder="No. of new converts" min="0" max="500" required /></td>
+                    <td><input class="wednesday" type="number" name="wednesday_converts"  placeholder="No. of new converts" min="0" max="500"  required /></td>
+                </tr>
+                <tr>
+                    <td> Guests </td>
+                    <td><input class="sunday" type="number" name="sunday_guests" placeholder="No. of Guests invited" min="0" max="500"  required /></td>
+                    <td><input class="wednesday" type="number" name="wednesday_guests"  placeholder="No. of Guests Invited" min="0" max="500"  required /></td>
+                </tr>
+                <tr>
+                    <td>Sum Total</td>
+                    <td class="suntotal" name="sunday_total">5000</td>
+                    <td class="wedtotal" name="wednesday_total">5000</td>
+                </tr>
+
+                <tr>
+                    <td> Date </td>
+                    <td><input type="date" name="sunday_date"  required /></td>
+                    <td><input type="date" name="wednesday_date"  required /></td>
+                </tr>
+                
+               
+                <tr>
+                   <td>Minister</td>
+                   <td><input type="text" name="sunday_minister" placeholder="Enter name of the officiating or guest minister" required/> </td>
+                   <td><input type="text" name="wednesday_minister" placeholder="Enter name of the officiating or guest minister" required/> </td>
+                </tr>
+                <tr>
+                    <td>Message</td>
+                   <td><input type="text" name="sunday_message" placeholder="Enter the title of the message preached" required/> </td>
+                   <td><input type="text" name="wednesday_message" placeholder="Enter the title of the message preached" required/> </td>
+
+                </tr>
+               
+                
+                
+
+
+        </table>
+        <button type="submit" name="submission">Submit Attendance</button>
+    </form>
+    </div>
+    <div class="footer">
+       
+                <div>
+                    Attendance Bar Chart
+                </div>
+                <div>
+                    Attendance Graph
+                </div>
+                <div>
+                Attendance Analysis
+                </div>
+                <div>
+                    Make Remarks 
+                </div>
+    
+       
+
+    </div>
+</div>
+
+
+<script>
+  $(document).ready(function(){
+    //Function to calculate total for sundayCategory
+    function sundayTotal(){
+        let sundayTotal=0;
+        $('.sunday').each(function(){
+            const value=parseInt($(this).val()) || 0; //parse the input as a float or default to 0
+            //Enforce the min and max values 
+            if(value<0){
+                value=0;
+                $(this).val(0)
+
+            }else if(value>500){
+                value=500;
+                $(this).val(500)
+            }
+            sundayTotal+=value; //Just adding and assigning 
+            const $totalCell=$(this).parent().next().find('.sunday'); //Find the corresponding total cell
+            $totalCell.text(value)
+
+        })
+      $('.suntotal').text(sundayTotal);
+    }
+    //Attach change event listener
+    $('.sunday').on('input',function(){
+        sundayTotal();
+    });
+
+    //InitialCalculation 
+
+    sundayTotal();
+
+
+
+
+    //For Wednesday Calculation
+
+    function wednesdayTotal(){
+        let wednesdayTotal=0;
+        $('.wednesday').each(function(){
+            const value=parseInt($(this).val()) || 0; //parse the input as a float or default to 0
+            if(value<0){
+                value=0;
+                $(this).val(0)
+
+            }else if(value>500){
+                value=500;
+                $(this).val(500)
+            }
+            wednesdayTotal+=value; //Just adding and assigning 
+            const $totalCell=$(this).parent().next().find('.wednesday'); //Find the corresponding total cell
+            $totalCell.text(value)
+
+        })
+      $('.wedtotal').text(wednesdayTotal);
+    }
+    //Attach change event listener
+    $('.wednesday').on('input',function(){
+        wednesdayTotal();
+    });
+
+    //InitialCalculation 
+
+    wednesdayTotal();
+ 
+ 
+  })
+
+
+ 
+
+</script>
+    
+</body>
+</html>

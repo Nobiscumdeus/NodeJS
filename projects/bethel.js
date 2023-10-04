@@ -3,6 +3,8 @@ const express=require('express')
 const app=express()
 const bodyParser=require('body-parser')
 const mysql=require('mysql2/promise')
+const Chart=require('chart.js')
+const $=require('jquery')
 
 app.set('view engine','ejs')
 app.use(bodyParser.urlencoded({extended:true})) //serves the funvtion of middleware 
@@ -12,6 +14,19 @@ app.use(express.static('public')) //Our css files will ve created in this folder
 app.get('/bethel',(req,res)=>{
     res.render('bethel');
 })
+
+ app.get('/bethel-chart',(req,res)=>{
+    res.render('bethel-chart')
+})
+app.get('/bethel-sunday',(req,res)=>{
+    res.render('bethel-sunday')
+})
+app.get('/bethel-wednesday',(req,res)=>{
+    res.render('bethel-wednesday')
+})
+
+
+
 /**
 app.post('/attendance-submission',(req,res)=>{
     //Access the attendance data using form body
@@ -88,7 +103,8 @@ app.post('/attendance-submission',async(req,res)=>{
 
         //capture form data from the request
         const {sunday_males,wednesday_males,sunday_females,wednesday_females,sunday_children,wednesday_children,sunday_converts,wednesday_converts,sunday_guests,wednesday_guests,sunday_total,wednesday_total,sunday_date,wednesday_date,sunday_minister,wednesday_minister,sunday_message,wednesday_message}=req.body
-console.log(sunday_males)
+        console.log(sunday_total)
+        console.log(wednesday_total)
         //start a database connection 
         
         //insert data into your table (modify the query as needed )
@@ -110,6 +126,51 @@ console.log(sunday_males)
         console.error('Error inserting data:',error)
         //Handle the errors and respond accordingly
         res.status(500).send('An error occurred while inserting data');
+    }
+})
+
+
+///Another section of passing data from the server/database to the frontend to plot our various charts
+app.get('/bethel-charting',async(req,res)=>{
+    try
+    {
+        //create a database connection 
+        const connection=await mysql.createConnection({
+            host:'localhost',
+            user:'root',
+            password:'',
+            database:'bethel_attendance'
+        });
+
+        //Fetch data from the wednesday table 
+        const [wednesdayRows, _]=await connection.query('SELECT * FROM wednesday')
+
+        //Fetch data from the sunday table
+        const [sundayRows, __]=await connection.query('SELECT * FROM sunday')
+
+        //close the connection 
+        connection.end();
+
+        //Combine the data and send it as a response 
+        const chartData={
+            wednesdayData:wednesdayRows,
+            sundayData:sundayRows,
+
+        };
+      res.json(chartData);
+      
+    //res.json(chartData.wednesdayData)
+    
+   
+       
+      
+
+
+
+    }catch(error)
+    {
+        console.error('Error retrieving the data',error);
+        res.status(500).send('An error occurred while retrieving data ')
     }
 })
 

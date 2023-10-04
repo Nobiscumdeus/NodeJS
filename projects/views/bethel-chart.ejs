@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/chart.js/dist/Chart.min.js"></script>
+    <title>Bethel Attendance</title>
+  </head>
+  <body>
+    <canvas id="sundayChart" width="400" height="100"></canvas>
+    <canvas id="wednesdayChart" width="400" height="400"></canvas>
+
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"
+    ></script>
+    <script>
+      /**
+    $(document).ready(function(){
+        const chartingData={
+            labels:['Category 1','Category 2','Category 3'],
+            datasets:[
+            {
+                label:'Category Values',
+                backgroundColor:'rgba(75,192,192,0.2)',
+                borderColor:'rgba(75,192,192,1)',
+                borderWidth:1,
+                data:[10,20,30], //Your data values 
+            }]
+
+        };
+
+        //Get the canvas element 
+        const ctx=document.getElementById('sundayChart').getContext('2d')
+
+        //Create the chart
+        const myChart=new Chart(ctx,{
+            type:'bar',
+            data:chartingData,
+            options:{
+                scales:{
+                    y:{
+                        beginAtZero:true,
+                    }
+                }
+            }
+        })
+    })
+
+    **/
+
+      /**
+    $.ajax({
+        url:'/bethel-charting',
+        method:'GET',
+        success:function(data){
+          
+            //separate data for sunday and wednesdays 
+           // const sundayData=data.sundayData;
+           // const wednesdayData=data.wednesdayData;
+
+            //Create separate charts for sunday and wednesdays 
+           createChart('sundayChart',sundayData)
+            createChart('wednesdayChart',wednesdayData)
+
+
+        },
+        error:function(){
+            console.error('Error fetching the data from the server ')
+        }
+    })
+
+    function createChart(chartId,data)
+    {
+        const labels=data.map(item=>item.date)
+        const values=data.map(item=>item.total)
+
+        console.log(values)
+        console.log(labels)
+
+        const ctx=document.getElementById(chartId).getContext('2d')
+        new Chart(ctx,{
+            type:'bar',
+            data:{
+                labels:labels,
+                datasets:[{
+                    label:'Chart Data',
+                    data:values,
+                    
+
+                    backgroundColor:'rgba(75,192,192,0.2)',
+                    borderColor:'rgba(75,192,192,1)',
+                    borderWidth:1,
+                }]
+            },
+            options:{
+                scales:{
+                    y:{
+                        beginAtZero:true,
+                    }
+                }
+            }
+        })
+    }
+    **/
+
+      var xmlhttp = new XMLHttpRequest();
+      var url = "/bethel-charting";
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var data = JSON.parse(this.responseText);
+          //console.log('Wednesday Data',data);
+          //console.log(data.sundayData);
+          sundayData = data.sundayData;
+          wednesdayData = data.wednesdayData;
+          //console.log('Wednesday Data',wednesdayData)
+          //Wednesday Data
+          sun_total = sundayData.map(function (elem) {
+            return elem.total;
+          });
+          sun_date = sundayData.map(function (elem) {
+            return elem.date;
+          });
+
+          wed_total = wednesdayData.map(function (elem) {
+            return elem.total;
+          });
+          wed_date = wednesdayData.map(function (elem) {
+            return elem.date;
+          });
+
+
+
+          //Wrtiting the Chart.JS code here
+          const ctx = document.getElementById("sundayChart").getContext("2d");
+          const sundayChart = new Chart(ctx, {
+            type: "pie",
+            data: {
+              labels:sun_date,
+              datasets: [
+                {
+                  label: "Sunday Meetings",
+                  data: sun_total,
+                  backgroundColor: "#ff335e",
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <title>Charts for Sunday Meetings </title>
+    <style type="text/css">
+        *{
+            margin:0;
+            padding:0;
+        }
+        .head
+        {
+            width:100%;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            text-align:center;
+            background:#333;
+            color:#8cccf4;
+            min-height:10vh;
+            padding:10px;
+            margin:10px;
+        
+
+        }
+        .head a
+        {
+            color:#fff;
+        }
+     
+    </style>
+  </head>
+  <body>
+    <!--<canvas id="sundayChart" width="400" height="100"></canvas> -->
+    <div class="head">
+        <h1> Raphael Intl Ministries , Bethel Tabernacle </h1>
+        <h3> Sunday Chart Analysis </h3>
+        <a href="/bethel"> Return Home </a>
+    </div>
+    <canvas id="sundayChart-line" width="400" height="100"></canvas>
+    <canvas id="sundayChart-bar" width="400" height="100"></canvas>
+    
+    <canvas id="sundayChart-pie" width="50" height="50"></canvas> 
+    <canvas id="sundayChart-doughnut" width="50" height="50"></canvas> 
+    <canvas id="sundayChart-scatter" width="50" height="50"></canvas>  
+  
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"
+    ></script>
+    <script>
+     
+
+      var xmlhttp = new XMLHttpRequest();
+      var url = "/bethel-charting";
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var data = JSON.parse(this.responseText);
+         
+          sundayData = data.sundayData;
+          sun_males = sundayData.map(function (elem) {
+            return elem.males;
+          });
+          sun_females = sundayData.map(function (elem) {
+            return elem.females;
+          });
+          sun_children = sundayData.map(function (elem) {
+            return elem.children;
+          });
+          sun_guests = sundayData.map(function (elem) {
+            return elem.guests;
+          });
+          sun_converts = sundayData.map(function (elem) {
+            return elem.converts;
+          });
+          sun_total = sundayData.map(function (elem) {
+            return elem.total;
+          });
+          sun_date = sundayData.map(function (elem) {
+            return elem.date;
+          });
+
+          //Converting the Sunday dates, to more readable formats 
+
+          const readable_dates=[];
+          //Iterating through the date strings and formatting each one 
+          sun_date.forEach(function(dateString){
+            const date=new Date(dateString);
+            const readable_date=date.toLocaleDateString('en-US',{
+                weekday:'long',
+                day:'numeric',
+                month:'long',
+                year:'numeric'
+                
+            });
+            readable_dates.push(readable_date);
+          })
+        //  console.log(readable_dates)
+
+
+          
+
+/**
+          const sunday=sundayData.map(function(elem){
+            return{
+                males:elem.males,
+                females:elem.females,
+                children:elem.children,
+                guests:elem.guests,
+                converts:elem.converts,
+                total:elem.total,
+                date:elem.date,
+                minister:elem.minister,
+                message:elem.message,
+
+            }
+            
+          });
+          console.log(sunday[0].males)
+
+          **/
+        
+
+
+
+          //Wrtiting the Chart.JS code here
+          /**
+          const ctx = document.getElementById("sundayChart").getContext("2d");
+          const sundayChart = new Chart(ctx, {
+            type: "pie",
+            data: {
+              labels:sun_date,
+              datasets: [
+                {
+                  label: "Sunday Meetings",
+                  data: sun_total,
+                  backgroundColor: "#ff335e",
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+          **/
+
+
+
+          //Sunday Line Chart
+          const line = document.getElementById("sundayChart-line").getContext("2d");
+          const sundayChartLine = new Chart(line, {
+            type: "line",
+            data: {
+             // labels:sun_date,
+             labels:readable_dates,
+              datasets: [
+                {
+                  label: "Sunday Meetings analysis as Line Chart ",
+                  data: sun_total,
+                  backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+
+
+          //SUnday Bar Chart 
+          const bar = document.getElementById("sundayChart-bar").getContext("2d");
+          const sundayChartBar= new Chart(bar, {
+            type: "bar",
+            data: {
+              //labels:sun_date,
+              labels:readable_dates,
+              datasets: [
+                {
+                  label: "Sunday Meetings analysis as Bar Chart ",
+                  data: sun_total,
+                  backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+
+          //Sunday Pie Chart 
+          const pie = document.getElementById("sundayChart-pie").getContext("2d");
+          const sundayChartPie= new Chart(pie, {
+            type: "pie",
+            data: {
+             // labels:sun_date,
+             labels:readable_dates,
+              datasets: [
+                {
+                  label: "Sunday Meetings analysis as Pie Chart",
+                  data: sun_total,
+                  backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+
+          //Sunday Chart as Doughnut 
+          const doughnut= document.getElementById("sundayChart-doughnut").getContext("2d");
+          const sundayChartDoughnut= new Chart(doughnut, {
+            type: "doughnut",
+            data: {
+             // labels:sun_date,
+             labels:readable_dates,
+              datasets: [
+                {
+                  label: "Sunday Meetings analysis as Doughnut Chart",
+                  data: sun_total,
+                  backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+
+//Sunday Meetings as Scattered Charts 
+
+const scatter= document.getElementById("sundayChart-scatter").getContext("2d");
+const sundayChartscatter= new Chart(scatter, {
+  type: "scatter",
+  data: {
+   // labels:sun_date,
+   labels:readable_dates,
+    datasets: [
+      {
+        label: "Sunday Meetings analysis as Scatter Chart",
+        data: sun_total,
+        backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+      },
+    ],
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  },
+});
+
+
+
+
+
+
+
+        }
+      };
+    </script>
+  </body>
+</html>

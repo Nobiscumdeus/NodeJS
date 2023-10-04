@@ -5,6 +5,7 @@
     list-style-type:none;
     box-sizing:border-box;
     border-collapse:collapse;
+    text-decoration:none;
  
 }
 body
@@ -55,6 +56,14 @@ body
     align-items:center;
     place-self:center;
     width:100%;
+}
+#copyright
+{
+    color:#fff;
+}
+#copyright a
+{
+    text-decoration:underline;
 }
 .main
 form{
@@ -116,7 +125,9 @@ button:hover
     cursor:pointer;
     
 }
-
+a{
+    color:#fff;
+}
 
 .suntotal,.wedtotal
 {

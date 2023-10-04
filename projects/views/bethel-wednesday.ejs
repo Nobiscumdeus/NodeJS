@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <title>Charts for Wednesday Meetings </title>
+    <style type="text/css">
+        *{
+            margin:0;
+            padding:0;
+        }
+        .head
+        {
+            width:100%;
+            display:flex;
+            flex-direction:column;
+            justify-content:center;
+            text-align:center;
+            background:#333;
+            color:#8cccf4;
+            min-height:10vh;
+            padding:10px;
+            margin:10px;
+        
+
+        }
+        .head a
+        {
+            color:#fff;
+        }
+    </style>
+  </head>
+  <body>
+
+    <div class="head">
+        <h1> Raphael Intl Ministries , Bethel Tabernacle </h1>
+        <h3> Sunday Chart Analysis </h3>
+        <a href="/bethel"> Return Home </a>
+    </div>
+    <!--<canvas id="wednesdayChart" width="400" height="100"></canvas> -->
+    <canvas id="wednesdayChart-line" width="400" height="100"></canvas>
+    <canvas id="wednesdayChart-bar" width="400" height="100"></canvas>
+    
+    <canvas id="wednesdayChart-pie" width="50" height="50"></canvas> 
+    <canvas id="wednesdayChart-doughnut" width="50" height="50"></canvas> 
+    <canvas id="wednesdayChart-scatter" width="50" height="50"></canvas>  
+  
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"
+    ></script>
+    <script>
+    
+
+      var xmlhttp = new XMLHttpRequest();
+      var url = "/bethel-charting";
+      xmlhttp.open("GET", url, true);
+      xmlhttp.send();
+      xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var data = JSON.parse(this.responseText);
+         
+          wednesdayData = data.wednesdayData;
+          wed_males = wednesdayData.map(function (elem) {
+            return elem.males;
+          });
+          wed_females = wednesdayData.map(function (elem) {
+            return elem.females;
+          });
+          wed_children = wednesdayData.map(function (elem) {
+            return elem.children;
+          });
+          wed_guests = wednesdayData.map(function (elem) {
+            return elem.guests;
+          });
+          wed_converts = wednesdayData.map(function (elem) {
+            return elem.converts;
+          });
+          wed_total = wednesdayData.map(function (elem) {
+            return elem.total;
+          });
+          wed_date = wednesdayData.map(function (elem) {
+            return elem.date;
+          });
+
+          //Converting the wedday dates, to more readable formats 
+
+          const readable_dates=[];
+          //Iterating through the date strings and formatting each one 
+          wed_date.forEach(function(dateString){
+            const date=new Date(dateString);
+            const readable_date=date.toLocaleDateString('en-US',{
+                weekday:'long',
+                day:'numeric',
+                month:'long',
+                year:'numeric'
+                
+            });
+            readable_dates.push(readable_date);
+          })
+       
+
+
+          //wednesday Line Chart
+          const line = document.getElementById("wednesdayChart-line").getContext("2d");
+          line.font="30px Arial"
+          const wednesdayChartLine = new Chart(line, {
+            type: "line",
+            data: {
+             // labels:sun_date,
+             labels:readable_dates,
+              datasets: [
+                {
+                  label: "Wednesday Meetings analysis as Line Chart ",
+                  data: wed_total,
+                  backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+
+
+          //Wednesday Bar Chart 
+          const bar = document.getElementById("wednesdayChart-bar").getContext("2d");
+          const wednesdayChartBar= new Chart(bar, {
+            type: "bar",
+            data: {
+              //labels:sun_date,
+              labels:readable_dates,
+              datasets: [
+                {
+                  label: "Wednesday Meetings analysis as Bar Chart ",
+                  data: wed_total,
+                  backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+
+          //Wednesday Pie Chart 
+          const pie = document.getElementById("wednesdayChart-pie").getContext("2d");
+          const wednesdayChartPie= new Chart(pie, {
+            type: "pie",
+            data: {
+             // labels:sun_date,
+             labels:readable_dates,
+              datasets: [
+                {
+                  label: "Wednesday Meetings analysis as Pie Chart",
+                  data: wed_total,
+                  backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+
+          //Wednesday Chart as Doughnut 
+          const doughnut= document.getElementById("wednesdayChart-doughnut").getContext("2d");
+          const wednesdayChartDoughnut= new Chart(doughnut, {
+            type: "doughnut",
+            data: {
+             // labels:wed_date,
+             labels:readable_dates,
+              datasets: [
+                {
+                  label: "Wednesday Meetings analysis as Doughnut Chart",
+                  data: wed_total,
+                  backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                },
+              ],
+            },
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+            },
+          });
+
+//Wednesday Meetings as Scattered Charts 
+
+const scatter= document.getElementById("wednesdayChart-scatter").getContext("2d");
+const wednesdayChartscatter= new Chart(scatter, {
+  type: "scatter",
+  data: {
+   // labels:sun_date,
+   labels:readable_dates,
+    datasets: [
+      {
+        label: "Wednesday Meetings analysis as Scatter Chart",
+        data: wed_total,
+        backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+      },
+    ],
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  },
+});
+
+
+
+
+
+
+
+        }
+      };
+    </script>
+
+  </body>
+</html>

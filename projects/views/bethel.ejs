@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bethel Tabernacle </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/bethel.css">
 </head>
 <body>
@@ -17,10 +18,10 @@
             Developed to make it easy for ministers to follow the growth of the Church<br/>
          Would be of best use through synergy between the ushering department and ministers 
     </p>
-      
+      <p id="copyright"> Developed by  &copy; <span id="copyright-year"></span>  <a href="https://chasfatprojects.netlify.app" target="_blank" rel="noreferrer" >Chasfat Projects </a> . All rights reserved  </p>
     </div>
     <div class="main">
-        <form action="/attendance-submission" method="POST">
+        <form action="/attendance-submission" method="POST" autocomplete="off">
         <table>
             <tr>
                 <th></th>
@@ -67,9 +68,21 @@
                 </tr>
                 <tr>
                     <td>Sum Total</td>
-                    <td class="suntotal" name="sunday_total">5000</td>
-                    <td class="wedtotal" name="wednesday_total">5000</td>
+                    <td class="suntotal">5000
+                       
+                        
+                    </td>
+                    
+                   
+                    <td class="wedtotal" >5000
+                       
+                    </td>
+                    <input type="hidden" id="suntotal" name="sunday_total">
+                    <input type="hidden" id="wedtotal" name="wednesday_total">
+
+                    
                 </tr>
+             
 
                 <tr>
                     <td> Date </td>
@@ -101,17 +114,13 @@
     <div class="footer">
        
                 <div>
-                    Attendance Bar Chart
+                  <a href="/bethel-sunday">Sunday Meetings Analysis </a>
                 </div>
                 <div>
-                    Attendance Graph
+                    <a href="/bethel-wednesday">Wednesday Meetings Analysis </a>
+                    
                 </div>
-                <div>
-                Attendance Analysis
-                </div>
-                <div>
-                    Make Remarks 
-                </div>
+             
     
        
 
@@ -120,6 +129,10 @@
 
 
 <script>
+const currentYear=new Date().getFullYear();
+//update the copyright year 
+const copyrightYearElement=document.getElementById('copyright-year')
+copyrightYearElement.textContent=currentYear;
   $(document).ready(function(){
     //Function to calculate total for sundayCategory
     function sundayTotal(){
@@ -141,10 +154,13 @@
 
         })
       $('.suntotal').text(sundayTotal);
+      $('#suntotal').val(sundayTotal)
+     
     }
     //Attach change event listener
     $('.sunday').on('input',function(){
         sundayTotal();
+        
     });
 
     //InitialCalculation 
@@ -174,6 +190,7 @@
 
         })
       $('.wedtotal').text(wednesdayTotal);
+      $('#wedtotal').val(wednesdayTotal)
     }
     //Attach change event listener
     $('.wednesday').on('input',function(){
@@ -183,7 +200,8 @@
     //InitialCalculation 
 
     wednesdayTotal();
- 
+
+   
  
   })
 

@@ -1,7 +1,7 @@
 const express=require('express')
 const app=express()
-const conn=require('./mongo/connect.js')
-const postModel=require('./mongo/connect.js')
+//const conn=require('./mongo/connect.js')
+//const postModel=require('./mongo/connect.js')
 
 app.use(express.urlencoded({extended:true}))
 app.use(express.json())
@@ -18,11 +18,11 @@ app.post('/mongo',async(req,res)=>{
 })
 app.get('/mongo',async(req,res)=>{
     try{
-        const posts=await postMode.find();
+        const posts=await postModel.find();
         res.json(posts)
 
     }catch(err){
-        res.status(500).send(error)
+        res.status(500).send(err)
 
     }
 })
@@ -35,7 +35,7 @@ app.get('/mongo/:id',async(req,res)=>{
         res.json(post)
 
 
-    }catch{
+    }catch(error){
         res.status(500).send(error)
 
     }

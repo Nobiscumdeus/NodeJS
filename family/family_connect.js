@@ -1,21 +1,4 @@
 
-/**CREATION OF DATABASE
- * 
- * var mysql=require('mysql')
-var con=mysql.createConnection({
-    host:'localhost',
-    user:'root',
-    password:''
-})
- * con.connect(function(err){
-    if(err)throw err;
-    console.log("Connection made successfully");
-    con.query("CREATE DATABASE family",function(err,result){
-        if(err) throw err;
-        console.log("Database created successfully !!!");
-    })
-})
- */
 //CREATION OF TABLE IN mysql
 var mysql=require('mysql')
 var con=mysql.createConnection({

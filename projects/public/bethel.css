@@ -6,6 +6,7 @@
     box-sizing:border-box;
     border-collapse:collapse;
     text-decoration:none;
+    
  
 }
 body
@@ -16,8 +17,9 @@ body
     flex-direction:column;
     justify-content:center;
     align-items:center;
-    background:#043424;
-    color:#acc4ac;
+    background:#040B1C;
+    color:#fff;
+    padding:20px;
    
 
 }

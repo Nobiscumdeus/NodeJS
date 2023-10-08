@@ -37,8 +37,11 @@ const pool=mysql.createPool({
 })
 
 //Handling the submission 
-app.post('/attendance-submission',async(req,res)=>{
+app.post('/bethel',async(req,res)=>{
+    let operationSuccessful=false;
     try{
+       
+        
         const connection=await pool.getConnection();
 
         //capture form data from the request
@@ -51,15 +54,53 @@ app.post('/attendance-submission',async(req,res)=>{
         const sundayQuery='INSERT INTO sunday(males,females,children,converts,guests,total,date,minister,message)VALUES(?,?,?,?,?,?,?,?,?)'
         const wednesdayQuery='INSERT INTO wednesday(males,females,children,converts,guests,total,date,minister,message)VALUES(?,?,?,?,?,?,?,?,?)'
         
-        await connection.execute(sundayQuery,[Number(sunday_males),Number(sunday_females),Number(sunday_children),Number(sunday_converts),Number(sunday_guests),Number(sunday_total),sunday_date,sunday_minister,sunday_message])
-        await connection.execute(wednesdayQuery,[Number(wednesday_males),Number(wednesday_females),Number(wednesday_children),Number(wednesday_converts),Number(wednesday_guests),Number(wednesday_total),wednesday_date,wednesday_minister,wednesday_message])
+      
+      const [row1,field1]= await connection.execute(sundayQuery,[Number(sunday_males),Number(sunday_females),Number(sunday_children),Number(sunday_converts),Number(sunday_guests),Number(sunday_total),sunday_date,sunday_minister,sunday_message])
+    const [row2,field2] = await connection.execute(wednesdayQuery,[Number(wednesday_males),Number(wednesday_females),Number(wednesday_children),Number(wednesday_converts),Number(wednesday_guests),Number(wednesday_total),wednesday_date,wednesday_minister,wednesday_message])
 
+
+    if(row1.affectedRows ===1 && row2.affectedRows ===1)
+    {
+        console.log('Data has been inserted successfully to the tables ')
+        operationSuccessful = true;
+        message = 'Congrats, Data inserted successfully.';
+      
+
+    }else{
+        console.error('Data not inserted into one or both tables ')
+        operationSuccessful = true;
+        message = 'Ooops!!!, Data not inserted, please try agian.';
+        
+
+    }
 
         //Release the connection 
         connection.release();
 
         //Redirect or send a response when done 
-        res.redirect('/bethel') //Redirect to a bethel page 
+      //  res.redirect('/bethel') //Redirect to a bethel page 
+   //     const successMessage='Congrats, data entered successfully'
+    //const errorMessage='Ooops!!!, an error occurred, try again '
+    //const redirectLink='/bethel'
+
+    //const responseMessage= operationSuccessful ? successMessage : errorMessage
+       // redirect:redirectLink,
+
+
+    //res.send(responseMessage) //sending the response message to the client
+
+
+// Construct the response as a JSON object
+
+ const responseObject = {
+    operationSuccessful: operationSuccessful,
+    message: message,
+  };
+
+  
+
+ //res.json(responseObject); // Send the JSON response to the client
+ res.redirect('/bethel')
 
     }catch(error)
     {
@@ -67,6 +108,10 @@ app.post('/attendance-submission',async(req,res)=>{
         //Handle the errors and respond accordingly
         res.status(500).send('An error occurred while inserting data');
     }
+
+    //Dealing with response to the client page 
+   
+    
 })
 
 

@@ -22,9 +22,18 @@ Moreso it contains codes that may look the same, but are intentionally re-writte
 
 </dd>
 <br/>
+<dt> Views Folder </dt>
+<dd>
+<li> In NodeJS application, an ejs templating engine helps to render html files with javascript codes wrapped in it , just as Blade is to Laravel , and Django template engine is to Django </li>
+<li> So all ejs files are contained in the views folder and appropriating routing are done in the various servers to get any of these files , or write into them dynamically </li>
+
+</dd>
+<br/>
 <dt> family folder  </dt>
 <dd>
-<li>
+<li> Files include family_connect.js, family.html etc </li>
+<li> It utilizes the power of express to control the routing, and also files which can often be html file or even json </li>
+
 </dd>
 <br/>
     <dt> Folder Name : node_modules </dt>

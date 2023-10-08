@@ -18,10 +18,11 @@
             Developed to make it easy for ministers to follow the growth of the Church<br/>
          Would be of best use through synergy between the ushering department and ministers 
     </p>
-      <p id="copyright"> Developed by  &copy; <span id="copyright-year"></span>  <a href="https://chasfatprojects.netlify.app" target="_blank" rel="noreferrer" >Chasfat Projects </a> . All rights reserved  </p>
+    <p id="message" class="success-message"></p>
     </div>
+
     <div class="main">
-        <form action="/attendance-submission" method="POST" autocomplete="off">
+        <form action="/bethel" method="POST" autocomplete="off">
         <table>
             <tr>
                 <th></th>
@@ -110,25 +111,98 @@
         </table>
         <button type="submit" name="submission">Submit Attendance</button>
     </form>
+                <div>
+                    <button> <a href="/bethel-sunday">Sunday Meetings Analysis </a> </button>
+                    <button>  <a href="/bethel-wednesday">Wednesday Meetings Analysis </a> </button>
+                </div>
     </div>
-    <div class="footer">
-       
-                <div>
-                  <a href="/bethel-sunday">Sunday Meetings Analysis </a>
-                </div>
-                <div>
-                    <a href="/bethel-wednesday">Wednesday Meetings Analysis </a>
-                    
-                </div>
-             
-    
-       
+   
+    <p id="copyright"> Developed by  &copy; <span id="copyright-year"></span>  <a href="https://chasfatprojects.netlify.app" target="_blank" rel="noreferrer" >Chasfat Projects </a> . All rights reserved  </p>
 
-    </div>
 </div>
 
 
 <script>
+    fetch('/bethel', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({}),
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Display the message in the <p> tag
+        messageElement.textContent = data.message;
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        // Handle any errors here
+      });
+    /**
+
+    //Function to first display and autohide message from the server 
+    function showMessage(message,isSuccess)
+    {
+        const messageElement=document.getElementById('message');
+        messageElement.textContent=message;
+
+        if(isSuccess){
+            messageElement.className='success-message'
+        }else{
+            messageElement.classname='error-message'
+        }
+
+        messageElement.style.display='block'
+
+        //Autohide the message after 1 minute 
+        setTimeout(()=>{
+            messageElement.style.transition='opacity 2s'
+            messageElement.style.opacity='0'
+
+            //Hide the message completely after the fadeout animation 
+            setTimeout(()=>{
+                messageElement.style.display='none'
+            },2000) //2000 milli seconds for the fadeout animation 
+        },60000) //60000 milli seconds or 1 minute before the fadeout animation 
+    }
+
+    **/
+
+/**
+    //Function to make ajax request to get the message status from the server 
+   async function makeRequest()
+    {
+        try{
+            const response=await fetch('/attendance-submission',{
+                method:'POST'
+            });
+            if(!response.ok){
+                throw new Error('Ooops!! Network response was not okay')
+            }
+
+            const data=await response.json()
+            showMessage(data.message,data.isSuccess);
+
+
+
+        }catch(error)
+        {
+            console.error('Error:', error);
+          //  showMessage('An error occurred. Please try again.', false); //just in case the response is not okay
+        }
+
+    }
+    makeRequest();
+    **/
+
+
+
+
+
+
+
+
 const currentYear=new Date().getFullYear();
 //update the copyright year 
 const copyrightYearElement=document.getElementById('copyright-year')

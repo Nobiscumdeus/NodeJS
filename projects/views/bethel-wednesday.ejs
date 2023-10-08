@@ -12,42 +12,142 @@
         *{
             margin:0;
             padding:0;
+            box-sizing:border-box;
+          
         }
-        .head
+        body
         {
+            min-height:100vh;
             width:100%;
+            background-image: linear-gradient(to right, #434343 0%, black 100%);
             display:flex;
             flex-direction:column;
             justify-content:center;
-            text-align:center;
-            background:#333;
-            color:#8cccf4;
-            min-height:10vh;
-            padding:10px;
-            margin:10px;
-        
-
+            align-items:center;
+            
         }
-        .head a
+        .chart-container
         {
+            width:80%;
+            padding:20px;
+            color:#fff;
+            font-size:18px;
+        }
+        .head{
+            padding:20px;
+            color:#1cacf4;
+        }
+        .link a
+        {
+            background:transparent;
+            text-decoration:none;
+            border:1px solid green;
+            padding:5px;
+            border-radius:10px;
+            margin:10px 10px;
+            color:orange;
+            transition:2s ease-in;
+        }
+        link a::first-child:hover{
+            border:1px solid #1cacf4;
+            color:#333;
+            transform:scale(1.05);
+            cursor:pointer;
+        }
+        p
+        {
+            color:#1cacf4;
+        }
+        a#home:hover,a#sun:hover
+        {
+            transform:scale(1.05);
+            background:#1cacf4;
             color:#fff;
         }
+
+       
+      
     </style>
   </head>
   <body>
 
-    <div class="head">
+    <div class="chart-container head">
         <h1> Raphael Intl Ministries , Bethel Tabernacle </h1>
-        <h3> Sunday Chart Analysis </h3>
-        <a href="/bethel"> Return Home </a>
+        <h3> Wednesday Chart Analysis </h3>
+       
+    </div>
+    <div class="chart-container link">
+        <a href="/bethel" id="home"> Return Home </a>
+        <a href="/bethel-sunday" id="sun">Sunday Charts</a>
     </div>
     <!--<canvas id="wednesdayChart" width="400" height="100"></canvas> -->
-    <canvas id="wednesdayChart-line" width="400" height="100"></canvas>
+    <!--
+        //Original codes 
+         <canvas id="wednesdayChart-line" width="400" height="100"></canvas>
     <canvas id="wednesdayChart-bar" width="400" height="100"></canvas>
     
-    <canvas id="wednesdayChart-pie" width="50" height="50"></canvas> 
-    <canvas id="wednesdayChart-doughnut" width="50" height="50"></canvas> 
-    <canvas id="wednesdayChart-scatter" width="50" height="50"></canvas>  
+
+    -->
+   
+    <!--
+        <canvas id="wednesdayChart-pie" width="50" height="50"></canvas> 
+        <canvas id="wednesdayChart-doughnut" width="50" height="50"></canvas> 
+        <canvas id="wednesdayChart-scatter" width="50" height="50"></canvas>  
+          <div class="chart-container pie">
+        <h4> Pie Chart  </h4>
+        <canvas id="wednesdayChart-pie"></canvas>
+    </div>
+     -->
+     <div class="chart-container line">
+        <h4> Line Chart : Sum Total of Attendees </h4>
+        <canvas id="wednesdayChart-line"></canvas>
+    </div>
+     <div class="chart-container bar">
+        <h4> Bar Chart : Sum Total of Attendees</h4>
+        <canvas id="wednesdayChart-bar"></canvas>
+    </div>
+
+
+
+    <!--- Chart For males -->
+    <div class="chart-container line">
+        <h4> Line Chart :Attendance of  Males  </h4>
+        <canvas id="wednesdayChart-line-males"></canvas>
+    </div>
+    
+
+    <!-- Chart for Females ----->
+    <div class="chart-container line">
+        <h4> Line Chart : Attendance of Females </h4>
+        <canvas id="wednesdayChart-line-females"></canvas>
+    </div>
+    
+
+
+    <!--- Chart for Children -->
+    <div class="chart-container line">
+        <h4> Line Chart : Attendance of Children </h4>
+        <canvas id="wednesdayChart-line-children"></canvas>
+    </div>
+   
+
+
+    <!--- Chart for Guests/Invitees/New Comers -->
+    <div class="chart-container line">
+        <h4> Line Chart : Attendance of Guests/Invitees/New Comers</h4>
+        <canvas id="wednesdayChart-line-guests"></canvas>
+    </div>
+    
+
+
+    <!---- Chart for New Converts -->
+    <div class="chart-container line">
+        <h4> Line Chart : Attendance of Converts </h4>
+        <canvas id="wednesdayChart-line-converts"></canvas>
+    </div>
+   
+    <p> Developed by Chasfat Projects &copy; 2023 </p>
+
   
     <script
       type="text/javascript"
@@ -108,6 +208,7 @@
           //wednesday Line Chart
           const line = document.getElementById("wednesdayChart-line").getContext("2d");
           line.font="30px Arial"
+          Chart.defaults.font.size=16;
           const wednesdayChartLine = new Chart(line, {
             type: "line",
             data: {
@@ -118,13 +219,17 @@
                   label: "Wednesday Meetings analysis as Line Chart ",
                   data: wed_total,
                   backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                  borderColor: 'rgb(255, 255, 255)',
+                  tension: 0.1
                 },
               ],
             },
             options: {
+
               scales: {
                 y: {
                   beginAtZero: true,
+                  stacked:true,
                 },
               },
             },
@@ -143,6 +248,7 @@
                   label: "Wednesday Meetings analysis as Bar Chart ",
                   data: wed_total,
                   backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                  color:"#fff",
                 },
               ],
             },
@@ -155,6 +261,162 @@
             },
           });
 
+
+          //Wednesday Line Chart for males
+            
+            const males = document.getElementById("wednesdayChart-line-males").getContext("2d");
+            males.font="30px Arial"
+            Chart.defaults.font.size=16;
+            const wednesdayChartLineMales = new Chart(males, {
+              type: "line",
+              data: {
+               // labels:sun_date,
+               labels:readable_dates,
+                datasets: [
+                  {
+                    label: "Male Attendance Chart",
+                    data: wed_males,
+                    backgroundColor: ["red","yellow","blue","pink","#ff004f","orange",'purple'],
+                    borderColor: 'rgb(255, 255, 255)',
+                    tension: 0.1
+                  },
+                ],
+              },
+              options: {
+  
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    stacked:true,
+                  },
+                },
+              },
+            });
+
+            //Wednesday Line Chart for females
+            const females = document.getElementById("wednesdayChart-line-females").getContext("2d");
+            females.font="30px Arial"
+            Chart.defaults.font.size=16;
+            const wednesdayChartLineFemales = new Chart(females, {
+              type: "line",
+              data: {
+               // labels:sun_date,
+               labels:readable_dates,
+                datasets: [
+                  {
+                    label: "Female Attendance Chart",
+                    data: wed_females,
+                    backgroundColor: ["red","green","blue","pink","#ff004f","lemon",'purple'],
+                    borderColor: 'rgb(255, 255, 255)',
+                    tension: 0.1
+                  },
+                ],
+              },
+              options: {
+  
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    stacked:true,
+                  },
+                },
+              },
+            });
+            // Wednesday Children attendance line chart
+            const children = document.getElementById("wednesdayChart-line-children").getContext("2d");
+            males.font="30px Arial"
+            Chart.defaults.font.size=16;
+            const wednesdayChartLineChildren = new Chart(children, {
+              type: "line",
+              data: {
+               // labels:sun_date,
+               labels:readable_dates,
+                datasets: [
+                  {
+                    label: "Children Attendance Chart",
+                    data: wed_children,
+                    backgroundColor: ["red","yellow","blue","pink","#ff004f","orange",'purple'],
+                    borderColor: 'rgb(255, 255, 255)',
+                    tension: 0.1
+                  },
+                ],
+              },
+              options: {
+  
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    stacked:true,
+                  },
+                },
+              },
+            });
+
+            //Wednesday Guests attendance Charts 
+
+             // Wednesday Children attendance line chart
+             const guests = document.getElementById("wednesdayChart-line-guests").getContext("2d");
+             males.font="30px Arial"
+             Chart.defaults.font.size=16;
+             const wednesdayChartLineGuests = new Chart(guests, {
+               type: "line",
+               data: {
+                // labels:sun_date,
+                labels:readable_dates,
+                 datasets: [
+                   {
+                     label: "Guests Attendance Chart",
+                     data: wed_guests,
+                     backgroundColor: ["red","yellow","blue","pink","#ff004f","orange",'purple'],
+                     borderColor: 'rgb(255, 255, 255)',
+                     tension: 0.1
+                   },
+                 ],
+               },
+               options: {
+   
+                 scales: {
+                   y: {
+                     beginAtZero: true,
+                     stacked:true,
+                   },
+                 },
+               },
+             });
+ 
+             //Wednesday Converts attendance line chart 
+              // Wednesday Children attendance line chart
+              const converts = document.getElementById("wednesdayChart-line-converts").getContext("2d");
+              converts.font="30px Arial"
+              Chart.defaults.font.size=16;
+              const wednesdayChartLineConverts = new Chart(converts, {
+                type: "line",
+                data: {
+                 // labels:sun_date,
+                 labels:readable_dates,
+                  datasets: [
+                    {
+                      label: "Converts Attendance Chart",
+                      data: wed_converts,
+                      backgroundColor: ["red","yellow","blue","pink","#ff004f","orange",'purple'],
+                      borderColor: 'rgb(255, 255, 255)',
+                      tension: 0.1
+                    },
+                  ],
+                },
+                options: {
+    
+                  scales: {
+                    y: {
+                      beginAtZero: true,
+                      stacked:true,
+                    },
+                  },
+                },
+              });
+  
+
+          /**
           //Wednesday Pie Chart 
           const pie = document.getElementById("wednesdayChart-pie").getContext("2d");
           const wednesdayChartPie= new Chart(pie, {
@@ -227,7 +489,7 @@ const wednesdayChartscatter= new Chart(scatter, {
     },
   },
 });
-
+ */
 
 
 
@@ -236,6 +498,11 @@ const wednesdayChartscatter= new Chart(scatter, {
 
         }
       };
+
+     
+
+
+
     </script>
 
   </body>

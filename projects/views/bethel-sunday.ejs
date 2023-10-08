@@ -12,42 +12,145 @@
         *{
             margin:0;
             padding:0;
+            box-sizing:border-box;
+          
         }
-        .head
+        body
         {
+            min-height:100vh;
             width:100%;
+            background-image: linear-gradient(to right, #434343 0%, black 100%);
             display:flex;
             flex-direction:column;
             justify-content:center;
-            text-align:center;
-            background:#333;
-            color:#8cccf4;
-            min-height:10vh;
-            padding:10px;
-            margin:10px;
-        
+            align-items:center;
+            
+        }
+        .chart-container
+        {
+            width:80%;
+            padding:20px;
+            color:#fff;
+            font-size:18px;
+        }
+        .head{
+            padding:20px;
+            color:#ff004f;
 
         }
-        .head a
+        .link a
         {
+            background:transparent;
+            text-decoration:none;
+            border:1px solid green;
+            padding:5px;
+            border-radius:10px;
+            margin:10px 10px;
+            color:#1cacf4;
+            transition:2s ease-in;
+        }
+        link a::first-child:hover{
+            border:1px solid #1cacf4;
+            color:#333;
+            transform:scale(1.05);
+            cursor:pointer;
+        }
+        p
+        {
+            color:#1cacf4;
+        }
+        a#home:hover,a#wed:hover
+        {
+            transform:scale(1.05);
+            background:#1cacf4;
             color:#fff;
         }
+
      
     </style>
   </head>
   <body>
-    <!--<canvas id="sundayChart" width="400" height="100"></canvas> -->
+   
+    <div class="chart-container head">
+        <h1> Raphael Intl Ministries , Bethel Tabernacle </h1>
+        <h3> Sunday Chart Analysis </h3>
+       
+    </div>
+    <div class="chart-container link">
+        <a href="/bethel" id="home"> Return Home </a>
+        <a href="/bethel-wednesday" id="wed">Wednesday Charts</a>
+    </div>
+
+
+    <div class="chart-container line">
+        <h4> Line Chart : Sum Total of Attendees </h4>
+        <canvas id="sundayChart-line"></canvas>
+    </div>
+     <div class="chart-container bar">
+        <h4> Bar Chart : Sum Total of Attendees</h4>
+        <canvas id="sundayChart-bar"></canvas>
+    </div>
+
+
+
+    <!--- Chart For males -->
+    <div class="chart-container line">
+        <h4> Line Chart :Attendance of  Males  </h4>
+        <canvas id="sundayChart-line-males"></canvas>
+    </div>
+    
+
+    <!-- Chart for Females ----->
+    <div class="chart-container line">
+        <h4> Line Chart : Attendance of Females </h4>
+        <canvas id="sundayChart-line-females"></canvas>
+    </div>
+    
+
+
+    <!--- Chart for Children -->
+    <div class="chart-container line">
+        <h4> Line Chart : Attendance of Children </h4>
+        <canvas id="sundayChart-line-children"></canvas>
+    </div>
+   
+
+
+    <!--- Chart for Guests/Invitees/New Comers -->
+    <div class="chart-container line">
+        <h4> Line Chart : Attendance of Guests/Invitees/New Comers</h4>
+        <canvas id="sundayChart-line-guests"></canvas>
+    </div>
+    
+
+
+    <!---- Chart for New Converts -->
+    <div class="chart-container line">
+        <h4> Line Chart : Attendance of Converts </h4>
+        <canvas id="sundayChart-line-converts"></canvas>
+    </div>
+   
+    <p> Developed by Chasfat Projects &copy; 2023 </p>
+
+
+
+
+    <!--
+        
     <div class="head">
         <h1> Raphael Intl Ministries , Bethel Tabernacle </h1>
         <h3> Sunday Chart Analysis </h3>
         <a href="/bethel"> Return Home </a>
     </div>
-    <canvas id="sundayChart-line" width="400" height="100"></canvas>
+         <canvas id="sundayChart-line" width="400" height="100"></canvas>
     <canvas id="sundayChart-bar" width="400" height="100"></canvas>
     
     <canvas id="sundayChart-pie" width="50" height="50"></canvas> 
     <canvas id="sundayChart-doughnut" width="50" height="50"></canvas> 
     <canvas id="sundayChart-scatter" width="50" height="50"></canvas>  
+
+    -->
+   
   
     <script
       type="text/javascript"
@@ -108,6 +211,7 @@
 
           //Sunday Line Chart
           const line = document.getElementById("sundayChart-line").getContext("2d");
+          Chart.defaults.font.size=16;
           const sundayChartLine = new Chart(line, {
             type: "line",
             data: {
@@ -115,9 +219,11 @@
              labels:readable_dates,
               datasets: [
                 {
-                  label: "Sunday Meetings analysis as Line Chart ",
+                  label: "Sunday Meetings Total attendance ",
                   data: sun_total,
                   backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                  borderColor: 'rgb(75, 192, 192)',
+                  tension: 0.1
                 },
               ],
             },
@@ -140,9 +246,10 @@
               labels:readable_dates,
               datasets: [
                 {
-                  label: "Sunday Meetings analysis as Bar Chart ",
+                  label: "Sum total of attendance as Bar Chart ",
                   data: sun_total,
                   backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                
                 },
               ],
             },
@@ -154,6 +261,145 @@
               },
             },
           });
+
+                    //Sunday Line Chart for males 
+                    const males = document.getElementById("sundayChart-line-males").getContext("2d");
+                    const sundayChartLineMales = new Chart(males, {
+                      type: "line",
+                      data: {
+                       // labels:sun_date,
+                       labels:readable_dates,
+                        datasets: [
+                          {
+                            label: "Adult Males Attendance on Sundays ",
+                            data: sun_males,
+                            backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                          },
+                        ],
+                      },
+                      options: {
+                        scales: {
+                          y: {
+                            beginAtZero: true,
+                          },
+                        },
+                      },
+                    });
+
+                    
+                    //Sunday Line Chart for females 
+                    const females = document.getElementById("sundayChart-line-females").getContext("2d");
+                    const sundayChartLineFemales = new Chart(females, {
+                      type: "line",
+                      data: {
+                       // labels:sun_date,
+                       labels:readable_dates,
+                        datasets: [
+                          {
+                            label: "Adult Females Attendance on Sundays ",
+                            data: sun_females,
+                            backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                          },
+                        ],
+                      },
+                      options: {
+                        scales: {
+                          y: {
+                            beginAtZero: true,
+                          },
+                        },
+                      },
+                    });
+
+                       
+                    //Sunday Line Chart for children
+                    const children = document.getElementById("sundayChart-line-children").getContext("2d");
+                    const sundayChartLineChildren = new Chart(children, {
+                      type: "line",
+                      data: {
+                       // labels:sun_date,
+                       labels:readable_dates,
+                        datasets: [
+                          {
+                            label: "Children Attendance on Sundays ",
+                            data: sun_children,
+                            backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                          },
+                        ],
+                      },
+                      options: {
+                        scales: {
+                          y: {
+                            beginAtZero: true,
+                          },
+                        },
+                      },
+                    });
+          
+                    ///Sunday Line Chart attendance for Guests 
+                    const guests = document.getElementById("sundayChart-line-guests").getContext("2d");
+                    const sundayChartLineGuests = new Chart(guests, {
+                      type: "line",
+                      data: {
+                       // labels:sun_date,
+                       labels:readable_dates,
+                        datasets: [
+                          {
+                            label: "Guests/Invitees/New Comers Attendance on Sundays ",
+                            data: sun_guests,
+                            backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                          },
+                        ],
+                      },
+                      options: {
+                        scales: {
+                          y: {
+                            beginAtZero: true,
+                          },
+                        },
+                      },
+                    });
+
+                       ///Sunday Line Chart attendance for Converts
+                       const converts= document.getElementById("sundayChart-line-converts").getContext("2d");
+                       const sundayChartLineConverts = new Chart(converts, {
+                         type: "line",
+                         data: {
+                          // labels:sun_date,
+                          labels:readable_dates,
+                           datasets: [
+                             {
+                               label: "New Converts Attendance on Sundays ",
+                               data: sun_converts,
+                               backgroundColor: ["red","green","blue","pink","yellow","orange",'purple'],
+                               borderColor: 'rgb(75, 192, 192)',
+                               tension: 0.1
+                             },
+                           ],
+                         },
+                         options: {
+                           scales: {
+                             y: {
+                               beginAtZero: true,
+                             },
+                           },
+                         },
+                       });
+          
+          
+
+
+
+
+          /**
 
           //Sunday Pie Chart 
           const pie = document.getElementById("sundayChart-pie").getContext("2d");
@@ -203,6 +449,8 @@
             },
           });
 
+
+
 //Sunday Meetings as Scattered Charts 
 
 const scatter= document.getElementById("sundayChart-scatter").getContext("2d");
@@ -227,6 +475,7 @@ const sundayChartscatter= new Chart(scatter, {
     },
   },
 });
+**/
 
         }
       };

@@ -20,11 +20,11 @@ con.connect(function(err){
     //inserting multiple records;
     const sql_mul="INSERT INTO adeolas(fullnames,occupation,position,birthmonth,sex) VALUES?";
     const values=[
-        ['Mrs Deborah Adeola','Civil Servant','Mother','January','Female'],
-        ['Dr Olumide Adeola','Medical Doctor','First Son','October','Male'],
-        ['Mr Afolabi Adeola','Student','Second Son','January','Male'],
-        ['Mr Kolapo Adeola','Student','Third Son','March','Male'],
-        ['Miss Precious Adeola','Nurse','Daughter','April','Female'],
+        ['Mrs Seyifunmi Owoeye','Self Employed','Mother','January','Female'],
+        ['Dr Chasfat','Self Employed','First Son','August','Male'],
+        ['Mr Tunde Adewole','Self Employed','Second Son','January','Male'],
+        ['Mr Okunade Oluwasegun','Student','Third Son','March','Male'],
+        ['Miss Obayemi Olawale','Nurse','Daughter','April','Female'],
 
     ]
     //con.query(sql_mul,[values],function(err,result){

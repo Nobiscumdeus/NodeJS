@@ -84,10 +84,14 @@
 
     <div class="chart-container line">
         <h4> Line Chart : Sum Total of Attendees </h4>
+       <h5>Mean Attendance is  : <span id="total"></span> </h5> 
+       
+        
         <canvas id="sundayChart-line"></canvas>
     </div>
      <div class="chart-container bar">
         <h4> Bar Chart : Sum Total of Attendees</h4>
+        <h5> Mean Attendance is : <span id="total_bar"></span> </h5> 
         <canvas id="sundayChart-bar"></canvas>
     </div>
 
@@ -96,6 +100,7 @@
     <!--- Chart For males -->
     <div class="chart-container line">
         <h4> Line Chart :Attendance of  Males  </h4>
+        <h5> Mean Attendance of Males: <span id="males"></span> </h5> 
         <canvas id="sundayChart-line-males"></canvas>
     </div>
     
@@ -103,6 +108,7 @@
     <!-- Chart for Females ----->
     <div class="chart-container line">
         <h4> Line Chart : Attendance of Females </h4>
+        <h5>Mean Attendance of Females : <span id="females"></span> </h5> 
         <canvas id="sundayChart-line-females"></canvas>
     </div>
     
@@ -111,6 +117,7 @@
     <!--- Chart for Children -->
     <div class="chart-container line">
         <h4> Line Chart : Attendance of Children </h4>
+        <h5>Mean Attendance of Children : <span id="children"></span> </h5> 
         <canvas id="sundayChart-line-children"></canvas>
     </div>
    
@@ -119,6 +126,7 @@
     <!--- Chart for Guests/Invitees/New Comers -->
     <div class="chart-container line">
         <h4> Line Chart : Attendance of Guests/Invitees/New Comers</h4>
+        <h5>Mean Attendance of Guests/Invitees/New Comers : <span id="guests"></span> </h5> 
         <canvas id="sundayChart-line-guests"></canvas>
     </div>
     
@@ -127,6 +135,7 @@
     <!---- Chart for New Converts -->
     <div class="chart-container line">
         <h4> Line Chart : Attendance of Converts </h4>
+        <h5>Mean Attendance of Converts : <span id="converts"></span> </h5>  
         <canvas id="sundayChart-line-converts"></canvas>
     </div>
    
@@ -171,24 +180,57 @@
           sun_males = sundayData.map(function (elem) {
             return elem.males;
           });
+
+         
           sun_females = sundayData.map(function (elem) {
             return elem.females;
           });
           sun_children = sundayData.map(function (elem) {
             return elem.children;
           });
+         
           sun_guests = sundayData.map(function (elem) {
             return elem.guests;
           });
+        
           sun_converts = sundayData.map(function (elem) {
             return elem.converts;
           });
+         
           sun_total = sundayData.map(function (elem) {
             return elem.total;
           });
           sun_date = sundayData.map(function (elem) {
             return elem.date;
           });
+
+
+          //Calculation of means 
+          sun_males_mean=sun_males.reduce((acc,val)=>acc+val,0)/sun_males.length;
+          document.getElementById('males').innerHTML=sun_males_mean; 
+          sun_females_mean=sun_females.reduce((acc,val)=>acc+val,0)/sun_females.length;
+          document.getElementById('females').innerHTML=sun_females_mean;
+          sun_children_mean=sun_children.reduce((acc,val)=>acc+val,0)/sun_children.length;
+          document.getElementById('children').innerHTML=sun_children_mean;
+          sun_guests_mean=sun_guests.reduce((acc,val)=>acc+val,0)/sun_guests.length;
+          document.getElementById('guests').innerHTML=sun_guests_mean;
+         // Math.floor(sun_guests_mean)
+          sun_converts_mean=sun_converts.reduce((acc,val)=>acc+val,0)/sun_converts.length;
+          //Math.floor(sun_converts_mean)
+          document.getElementById('converts').innerHTML=sun_converts_mean;
+          
+          sun_total_mean=sun_total.reduce((acc,val)=>acc+val,0)/sun_total.length;
+          //Math.floor(sun_total_mean)
+          document.getElementById('total').innerHTML=sun_total_mean;
+          document.getElementById('total_bar').innerHTML=sun_total_mean;
+
+
+
+
+
+
+
+
 
           //Converting the Sunday dates, to more readable formats 
 

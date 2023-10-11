@@ -100,10 +100,12 @@
      -->
      <div class="chart-container line">
         <h4> Line Chart : Sum Total of Attendees </h4>
+        <h5>Average Attendance of people <span id="total"> </span></h5>
         <canvas id="wednesdayChart-line"></canvas>
     </div>
      <div class="chart-container bar">
         <h4> Bar Chart : Sum Total of Attendees</h4>
+        <h5>Average Attendance of people <span id="total_bar"> </span></h5>
         <canvas id="wednesdayChart-bar"></canvas>
     </div>
 
@@ -112,6 +114,7 @@
     <!--- Chart For males -->
     <div class="chart-container line">
         <h4> Line Chart :Attendance of  Males  </h4>
+        <h5>Average Attendance of Males <span id="males"> </span></h5>
         <canvas id="wednesdayChart-line-males"></canvas>
     </div>
     
@@ -119,6 +122,7 @@
     <!-- Chart for Females ----->
     <div class="chart-container line">
         <h4> Line Chart : Attendance of Females </h4>
+        <h5>Average Attendance of Females <span id="females"> </span></h5>
         <canvas id="wednesdayChart-line-females"></canvas>
     </div>
     
@@ -127,6 +131,7 @@
     <!--- Chart for Children -->
     <div class="chart-container line">
         <h4> Line Chart : Attendance of Children </h4>
+        <h5>Average Attendance of Children<span id="children"> </span></h5>
         <canvas id="wednesdayChart-line-children"></canvas>
     </div>
    
@@ -135,6 +140,7 @@
     <!--- Chart for Guests/Invitees/New Comers -->
     <div class="chart-container line">
         <h4> Line Chart : Attendance of Guests/Invitees/New Comers</h4>
+        <h5>Average Attendance of Guests<span id="guests"> </span></h5>
         <canvas id="wednesdayChart-line-guests"></canvas>
     </div>
     
@@ -143,6 +149,7 @@
     <!---- Chart for New Converts -->
     <div class="chart-container line">
         <h4> Line Chart : Attendance of Converts </h4>
+        <h5>Average Attendance of Converts<span id="converts"> </span></h5>
         <canvas id="wednesdayChart-line-converts"></canvas>
     </div>
    
@@ -186,6 +193,34 @@
           wed_date = wednesdayData.map(function (elem) {
             return elem.date;
           });
+
+
+
+          //Calculation of means of for wednesday data 
+          wed_males_mean=wed_males.reduce((acc,val)=>acc+val,0)/wed_males.length;
+          document.getElementById('males').innerHTML=wed_males_mean; 
+          wed_females_mean=wed_females.reduce((acc,val)=>acc+val,0)/wed_females.length;
+          document.getElementById('females').innerHTML=wed_females_mean;
+          wed_children_mean=wed_children.reduce((acc,val)=>acc+val,0)/wed_children.length;
+          document.getElementById('children').innerHTML=wed_children_mean;
+          wed_guests_mean=wed_guests.reduce((acc,val)=>acc+val,0)/wed_guests.length;
+          document.getElementById('guests').innerHTML=wed_guests_mean;
+         // Math.floor(wed_guests_mean)
+          wed_converts_mean=wed_converts.reduce((acc,val)=>acc+val,0)/wed_converts.length;
+          //Math.floor(wed_converts_mean)
+          document.getElementById('converts').innerHTML=wed_converts_mean;
+          
+          wed_total_mean=wed_total.reduce((acc,val)=>acc+val,0)/wed_total.length;
+          //Math.floor(wed_total_mean)
+          document.getElementById('total').innerHTML=wed_total_mean;
+          document.getElementById('total_bar').innerHTML=wed_total_mean;
+
+
+
+
+
+
+
 
           //Converting the wedday dates, to more readable formats 
 
